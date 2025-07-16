@@ -1,0 +1,202 @@
+1.Linux命令
+1.永久设置环境变量
+在~/.bashrc中写入
+export XXX=xxxxxx 
+执行source ~/.bashrc
+2.查找并显示指定命令的可执行文件的完整路径
+which 命令 例：which ls
+3.查找文件
+find [路径] [匹配条件] [动作]
+例：find /usr/lib -name libcrypto.so*
+find . -name "*.c"将当前目录及其子目录下所有文件后缀为 .c 的文件列出来
+4.显示文件类型
+file [-bcLvz][-f <名称文件>][-m <魔法数字文件>...][文件或目录...]
+5.创建符号链接
+ ln [参数][源文件或目录][目标文件或目录]
+例如：sudo ln -s /usr/bin/python3 /usr/bin/python
+2.Git命令
+1.查看配置信息
+git config  --list 
+2.克隆远程仓库到本地
+git clone https://github.com/username/repository.git
+3.查看当前工作区和暂存区的状态
+git status
+4.查看提交记录
+git log
+查看简洁的提交记录
+git log --oneline
+5. 添加单个文件
+git add filename
+添加所有更改的文件
+git add .
+6.提交暂存区的文件并添加提交信息
+git commit -m "提交说明"
+7.撤销更改
+撤销工作区对文件的修改（未暂存）
+git checkout -- filename
+从暂存区移除文件但保留工作区修改
+git reset HEAD filename
+撤销最近一次提交但保留更改
+git reset --soft HEAD~1
+撤销最近一次提交并丢弃更改
+git reset --hard HEAD~1
+8.分支管理
+列出所有分支
+git branch
+查看远程分支
+git branch -r
+查看所有本地和远程分支
+git branch -a
+创建新分支
+git branch new-branch
+切换到指定分支
+git checkout branch-name
+创建并切换到新分支（Git 2.23 及以上）
+git switch -c new-branch
+9.合并分支
+切换到目标分支（如 main）
+git checkout main
+合并其他分支到当前分支
+git merge feature-branch
+10.删除分支
+删除本地分支
+git branch -d branch-name
+强制删除本地分支
+git branch -D branch-name
+删除远程分支
+git push origin --delete branch-name
+11.远程仓库操作
+添加远程仓库
+添加新的远程仓库
+git remote add origin https://github.com/username/repository.git
+查看远程仓库
+列出所有远程仓库
+git remote -v
+推送到远程仓库
+推送本地分支到远程仓库
+git push origin branch-name
+推送所有分支到远程
+git push --all origin
+拉取远程更改
+从远程仓库拉取并合并到当前分支
+git pull origin branch-name
+获取远程更新
+获取但不合并
+git fetch origin
+克隆特定分支
+git clone -b branch-name --single-branch https://github.com/username/repository.git
+标签管理
+创建标签
+创建轻量标签
+git tag v1.0
+创建附注标签
+git tag -a v1.0 -m "版本 1.0 发布"
+查看标签
+git tag
+推送标签到远程
+推送单个标签
+git push origin v1.0
+推送所有标签
+git push origin --tags
+删除标签
+删除本地标签
+git tag -d v1.0
+删除远程标签
+git push origin --delete tag v1.0
+变基与合并
+变基
+将当前分支的基底变更为目标分支
+git rebase main
+中止变基
+git rebase --abort
+继续变基
+git rebase --continue
+交互式变基
+交互式变基，指定回退的提交数
+git rebase -i HEAD~3
+解决冲突
+当执行合并或变基操作时，如果出现冲突，需手动解决：
+编辑冲突的文件，按照标记进行修改。
+添加解决冲突后的文件到暂存区：
+git add filename
+继续合并或变基操作：
+git commit  # 合并
+git rebase --continue  # 变基
+查看差异
+查看工作区与暂存区的差异
+git diff
+查看暂存区与上次提交的差异
+git diff --cached
+查看特定文件的差异
+git diff filename
+暂存更改
+使用 Git Stash
+保存当前工作进度到栈中，并清理工作区
+git stash
+查看所有暂存的更改
+git stash list
+应用最新的暂存更改
+git stash apply
+应用并删除最新的暂存
+git stash pop
+删除特定的暂存
+git stash drop stash@{0}
+清空所有暂存
+git stash clear
+其他实用命令
+查看分支合并情况
+git branch --merged  # 查看已合并到当前分支的分支
+git branch --no-merged  # 查看未合并到当前分支的分支
+重命名分支
+本地重命名当前分支
+git branch -m new-branch-name
+远程重命名分支需要删除旧分支并推送新分支
+git push origin :old-branch-name
+git push origin new-branch-name
+查看引用图谱
+git log --graph --oneline --all
+清理未追踪文件
+预览将要删除的文件
+git clean -n
+删除未追踪的文件
+git clean -f
+删除未追踪的目录
+git clean -fd
+查看提交的改动
+查看指定提交的改动
+git show commit-id
+暂时回到某个提交
+使用游离 HEAD 模式
+git checkout commit-id
+3.Repo命令
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' 
+repo init -u ssh://YOUR_NAME@gerrit.it.chehejia.com:29418/cu/schumacher/cv/manifest -b develop -m bringup.xml
+repo sync同步仓库
+repo start --all develop
+repo status查看状态 
+4.编译命令
+1.NPU编译固件
+完整的编译命令为：​
+./build.sh <platform> [<target_name>.elf] [--log-level=<log_level>] [--emu-debug|--helium-debug] [--cluster=<cluster_mask>]
+其中，[]表示可选项，|表示任选其一。
+platform：取值pm|rtl|fm
+target_name：取值npurt|npurt2|functional_test|unit_test|<case_name>
+--log-level：设置固件的log等级，不设置此项时固件默认的log等级为debug。log_level取值为：none|fatal|error|warn|info|debug|verbose
+--emu-debug：设置支持emulator上的调试，包括向emulator上输出log，仅platform=rtl时有效
+--helium-debug：设置支持helium上的调试，通过虚拟uart向helium输出log，仅platform-rtl时有效
+--cluster：设置固件使用的cluster mask。cluster mask会在多个地方设置，其优先级请参考：
+编译全部固件
+编译命令为：./build.sh <platform>
+./build.sh pm  #编译全部的Perfomance Model上的固件
+./build.sh rtl #编译全部的RTL上的固件，sim/emu验证使用该选项
+注意：./build.sh rtl 不带其他参数时，目前已默认支持emulator上的调试，包括向emlator输出log和dump um/mem数据，但是，log的默认级别已设为none，如果需要输出log，需要添加--log-level=<level>设置高于none的级别。
+./build.sh fm #编译全部的Function Model上的固件
+编译指定固件
+编译命令为：./build.sh <platform> <target_name>.elf
+示例，编译rtl上运行的function_smoke_1tile_vcs_01_int8：​
+./build.sh rtl function_smoke_1tile_vcs_01_int8.elf
+编译不带log的固件
+编译命令为：./build.sh <platform> --log-level=none [<target_name>.elf]
+示例：./build.sh fm --log-level=none
+编译支持通过虚拟uart向helium输出log的固件
+示例：./buildsh.sh rtl --helium-debug --log-level=debug 
